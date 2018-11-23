@@ -11,29 +11,59 @@
     <link rel="icon" href="../static/image/code.png">
 </head>
 <body class="body">
-<form class="layui-form layui-form-pane" action="">
+<form class="layui-form layui-form-pane">
     <div class="layui-inline">
-        <label class="layui-form-label">IP:Port</label>
+        <label class="layui-form-label">Ip:Port</label>
         <div class="layui-input-inline">
-            <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="IpPort" lay-verify="required" value="1000" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-inline">
-        <label class="layui-form-label">Monitor行数</label>
+        <label class="layui-form-label" style="width: 150px">实例密码:</label>
         <div class="layui-input-inline">
-            <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
+            <input type="text" name="PassWord" lay-verify="required" value="100" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-inline">
-        <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        <button class="layui-btn" onclick="submit">开始扫描</button>
     </div>
 </form>
+<!--<iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe> -->
 <br/>
     <fieldset class="layui-elem-field">
-        <legend>Redis - 热Key显示结果</legend>
-        <div class="layui-field-box">
-            你可以在这里放任何内容，比如表单神马的
+        <legend>未开鉴权集群信息</legend>
+        {{.Ip}}####{{.Pwd}}
+        <div class="layui-field-box" id="ShowData">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>erp</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th>角色</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{range .AdminInfo}}
+                <tr>
+                    <td>{{.Erp}}</td>
+                    <td>{{.Mail}}</td>
+                    <td>{{.Tel}}</td>
+                    {{if eq .Role 0}}
+                        <td>运维</td>
+                    {{else}}
+                        <td>开发</td>
+                    {{end}}
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
         </div>
     </fieldset>
 
@@ -80,9 +110,12 @@
 
             //监听提交
             form.on('submit(demo1)', function(data){
-                layer.alert(JSON.stringify(data.field), {
-                    title: '最终的提交信息'
-                });
+                var sd = document.getElementById("ShowData");
+                sd.innerText = JSON.stringify(data.field)
+                // layer.alert(JSON.stringify(data.field["Number"]));
+                // layer.alert(JSON.stringify(data.field), {
+                //     title: '最终的提交信息'
+                // });
                 return false;
             });
 

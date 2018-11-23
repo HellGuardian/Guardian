@@ -11,4 +11,5 @@ func init () {
 	beego.Router("/demo/welcome", &controllers.WelcomeController{})
 	beego.Router("/demo/scan-hot-key", &controllers.HotKeyController{})
 	beego.Router("/demo/data-table", &controllers.DataTableController{})
+	beego.Router("/demo/noauth_space", &controllers.NoAuthController{})
 }
